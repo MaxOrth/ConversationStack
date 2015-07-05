@@ -1,3 +1,21 @@
 {
-    
+    "manifest_version": 2,
+    "name": "Conversation Stack",
+    "version": "0.1",
+    "app": {
+        "background": {
+            "scripts": ["js/app/background.js"]
+        }
+    },
+	
+    "description": "Keeps track of conversations.",
+	"icons": {},
+	
+	"author": "Cory McCartan, Max Notarangelo, Max Orth",
+	"offline_enabled": true,
+	"minimum_chrome_version": "25",
+	
+	"permissions": [
+		
+	]
 }
