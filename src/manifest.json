@@ -4,11 +4,10 @@
     "version": "0.1",
     "app": {
         "background": {
-            "scripts": ["js/background.js"]
+            "scripts": ["js/app/background.js"]
         }
     },
 	
-    "default_locale": "en",
     "description": "Keeps track of conversations.",
 	"icons": {},
 	

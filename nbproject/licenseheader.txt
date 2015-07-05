@@ -1,3 +1,0 @@
-${licensePrefix}2015
-.
-${licensePrefix}All Rights Reserved.
