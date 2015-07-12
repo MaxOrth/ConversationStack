@@ -1,13 +1,13 @@
 model = (function() {
-	var topics = "ABCDEFGHIJKLM".split("");
-	var agenda = [];
+	var topics = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+	var agenda = "1234567890!@#$%^&*()".split("");
 	
 	return {
 		topics: topics,
 		agenda: agenda,
 		
 		addTopic: function(topic) {
-			topics.push(topic)
+			topics.push(topic);
 		},
 		addAgendaItem: function(item){
 			agenda.push(item);

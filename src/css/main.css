@@ -1,11 +1,27 @@
 body {
   font-size: 16px; }
 
+.view {
+  display: none; }
+
 .draggable {
   -webkit-app-region: drag; }
 
-#mainContent {
+.mainContent {
+  height: calc(100vh - 64px);
+  transition: 0 height; }
+
+md-tabs {
+  border-radius: 0; }
+
+md-content {
   outline: none; }
+
+md-sidenav {
+  transition: 200ms all; }
+
+.md-divider {
+  margin: 0.6em 0; }
 
 ::-webkit-scrollbar {
   width: 16px; }

@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,YAAa;EACZ,MAAM,EAAE,kBAAkB",
+"mappings": ";;;;;;;AAQA,mBAAmB;EAClB,KAAK,EAAE,IAAI;;AAEZ,yBAA0B;EACzB,KAAK,EAAE,IAAI",
 "sources": ["../scss/desktop-only.scss"],
 "names": [],
 "file": "desktop-only.css"
