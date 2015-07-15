@@ -50,15 +50,15 @@ model = (function() {
 			return agenda.shift();
 		},
 		saveSettings: function() {
-			if (didSyncData !== settings.syncData) {
+			if (didSyncData !== this.settings.syncData) {
 				saveAllData();
-				if (!settings.syncData) {
-					storage.clear("sync");
+				if (!this.settings.syncData) {
+					storage.clearAll("sync");
 				}
 			} else {
-				storage.save("settings", settings);
+				storage.save("settings", this.settings);
 			}
-			didSyncData = settings.syncData;
+			didSyncData = this.settings.syncData;
 		},
 	};
 })();
