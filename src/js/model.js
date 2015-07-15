@@ -9,22 +9,27 @@ model = (function() {
 	var settings = {
 		syncData: true
 	};
-	var didSyncData = settings.syncData;
+	var didSyncData;
 	
 	/*
 	 * ON LOAD
 	 */
 	var onload = function() {
-		storage.load("settings", function(loaded) {
-			settings = loaded;
-		});
+		storage.loadLocal("syncData", function(sync) {
+			settings.syncData = sync;
+			didSyncData = sync;
+			storage.load("settings", function(loaded) {
+				settings = loaded;
+			}, this.settings); // use settings as default
+		}, true); // default true
 	};
 	
 	
 	// UTILITY FUNCTIONS
 	 
 	var saveAllData = function() {
-		storage.save("settings", settings);
+		storage.save("settings", this.settings);
+		storage.saveLocal("syncData", this.settings.syncData);
 	};
 	
 	/*
@@ -51,7 +56,7 @@ model = (function() {
 		},
 		saveSettings: function() {
 			if (didSyncData !== this.settings.syncData) {
-				saveAllData();
+				saveAllData.call(this); // bind it to this to get most up-to-date info
 				if (!this.settings.syncData) {
 					storage.clearAll("sync");
 				}
@@ -60,5 +65,6 @@ model = (function() {
 			}
 			didSyncData = this.settings.syncData;
 		},
+		saveAllData: saveAllData
 	};
 })();

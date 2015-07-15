@@ -40,29 +40,51 @@ function main() {
  */
 storage = {
 	save: function(key, value) {
-		storageArea = model.settings.syncData ? chrome.storage.sync : chrome.storage.local;
+		var storageArea = model.settings.syncData ? chrome.storage.sync : chrome.storage.local;
 		var obj = {};
 		obj[key] = value;
-		console.log(model.settings.syncData);
 		storageArea.set(obj, LOGRF);
 	},
-	load: function(key, callback) {
-		storageArea = model.settings.syncData ? chrome.storage.sync : chrome.storage.local;
+	saveLocal: function(key, value) {
+		var storageArea = chrome.storage.local;
+		var obj = {};
+		obj[key] = value;
+		storageArea.set(obj, LOGRF);
+	},
+	load: function(key, callback, defaultValue) {
+		var storageArea = model.settings.syncData ? chrome.storage.sync : chrome.storage.local;
 		storageArea.get(key, function(data) {
 			if (chrome.runtime.lastError) { // could not get data
 				console.log(chrome.runtime.lastError);
 				return;
 			}
-
-			callback(data[key]); // return the value
+			if (data.hasOwnProperty(key)) {
+				callback(data[key]); // return the value
+			} else {
+				callback(defaultValue);
+			}
+		});
+	},
+	loadLocal: function(key, callback, defaultValue) {
+		var storageArea = chrome.storage.local;
+		storageArea.get(key, function(data) {
+			if (chrome.runtime.lastError) { // could not get data
+				console.log(chrome.runtime.lastError);
+				return;
+			}
+			if (data.hasOwnProperty(key)) {
+				callback(data[key]); // return the value
+			} else {
+				callback(defaultValue);
+			}
 		});
 	},
 	remove: function(key) {
-		storageArea = model.settings.syncData ? chrome.storage.sync : chrome.storage.local;
+		var storageArea = model.settings.syncData ? chrome.storage.sync : chrome.storage.local;
 		storageArea.remove(key);
 	},
 	clearAll: function(mode) {
-		storageArea = chrome.storage[mode];
+		var storageArea = chrome.storage[mode];
 		storageArea.clear();
 	}
 };

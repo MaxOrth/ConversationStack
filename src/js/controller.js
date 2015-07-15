@@ -25,10 +25,13 @@ function uiSetup() {
 	// throttle
 	throttle("touchmove", "tTouchMove", container);
 	
-	$("#close").addEventListener("click", closeApp);
 	container.addEventListener("touchstart", menuTouch);
 	container.addEventListener("tTouchmove", menuTouch);
 	container.addEventListener("touchend", menuTouch);
+	var els = $$("#close");
+	for (var i = 0; i < els.length; i++) {
+		els[i].addEventListener("click", closeApp);
+	}
 	scrollListeners();
 }
 
@@ -42,6 +45,8 @@ function scrollListeners() {
 }
 
 function closeApp() {
+	openView("CLOSE"); // do any view-specific cleanup
+	model.saveAllData(); // save all our data
 	chrome.app.window.current().close();
 }
 
@@ -114,7 +119,7 @@ function menuTouch(e) {
 }
 
 function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
-	$scope.topics = model.topics;
+	  $scope.topics = model.topics;
 	$scope.agenda = model.agenda;
 	$scope.settings = model.settings;
 	
@@ -129,6 +134,9 @@ function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
 			case "settings":
 				model.saveSettings();
 				break;
+		}
+		if (name == "CLOSE") { // if we're just closing the app don't bother changing views
+			return;
 		}
 		$("#view_"+ UI.current).style.display = "";
 		$("#view_"+ name).style.display = "block";
@@ -170,6 +178,7 @@ function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
 	
 	window.openSideMenu = $scope.openMenu;
 	window.closeSideMenu = $scope.closeMenu;
+	window.openView = $scope.openView;
 	window.MOBILE = $scope.isMobile;
 	window.SCOPE = $scope;
 }
