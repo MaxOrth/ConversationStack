@@ -1,4 +1,10 @@
-body {
-  font-family: "Helvetica Neue", "Segoe UI", "Arial", sans-serif; }
+.draggable {
+  -webkit-app-region: drag; }
+
+#menuButton md-icon {
+  opacity: 0.95; }
+
+#menuButton md-icon:hover {
+  opacity: 1.0; }
 
 /*# sourceMappingURL=desktop-only.css.map */

@@ -2,13 +2,208 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/main.css" media="all">
-        <link rel="stylesheet" type="text/css" href="css/desktop-only.css" media="only screen and (min-width: 800px)">
-        <!-- JS -->
-        <script type="text/javascript" src="js/build/production.js"></script>
+		<!-- MATERIAL DESIGN -->
+		<link rel="stylesheet" href="css/angular-material.css">
+		<!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/fonts-import.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/desktop-only.css" id="desktopStylesheet">
+        <link rel="stylesheet" type="text/css" href="css/mobile-only.css" id="mobileStylesheet">
     </head>
-    <body>
-		Hello.
-    </body>
+    <body ng-app="conversation-stack" class="md-body-1" ng-controller="mainController" ng-csp is-mobile="{{isMobile}}">
+		<!-- NAVIGATION DRAWER -->
+		<md-sidenav id="sidenav" class="md-sidenav-left md-whiteframe-z3" md-component-id="menu">
+			<md-content>
+				<md-list class="md-body-2">
+					<md-list-item>
+						<md-button class="md-icon-button" ng-click="closeMenu()">
+							<md-icon>arrow_back</md-icon>
+						</md-button>
+						<p class="md-subhead">conversation-stack</p>
+					</md-list-item>
+
+						<md-divider></md-divider>
+
+					<md-list-item ng-click="openView('main')" ng-style="styleCurrentView('main')">
+						<md-icon ng-style="getColor('main')">forum</md-icon>
+						<p>Talk</p>
+					</md-list-item>
+					<md-list-item ng-click="openView('plan')" ng-style="styleCurrentView('plan')">
+						<md-icon ng-style="getColor('plan')">list</md-icon>
+						<p>Plan</p>
+					</md-list-item>
+					<md-list-item ng-click="openView('review')" ng-style="styleCurrentView('review')">
+						<md-icon ng-style="getColor('review')">history</md-icon>
+						<p>Review</p>
+					</md-list-item>
+
+						<md-divider></md-divider>
+
+					<md-list-item ng-click="openView('settings')" ng-style="styleCurrentView('settings')">
+						<md-icon ng-style="getColor('settings')">settings</md-icon>
+						<p>Settings</p>
+					</md-list-item>
+					<md-list-item ng-click="openView('help')" ng-style="styleCurrentView('help')">
+						<md-icon ng-style="getColor('help')">help</md-icon>
+						<p>Help and Feedback</p>
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</md-sidenav>
+		
+		<!-- MAIN VIEW -->
+		<section id="view_main" md-theme="main" class="view" style="display: block">
+			<div id="container" layout="column">
+			<!-- MAIN TOOLBAR -->
+			<md-toolbar class="md-primary">
+				<div class="md-toolbar-tools">
+					<md-button id="menuButton" class="md-icon-button" ng-click="openMenu()">
+						<md-icon>menu</md-icon>
+					</md-button>
+
+					<h2 id="appTitle" class="draggable">Talk</h2>
+					<span class="draggable" style="height: 100%" flex></span> <!--fills up space between L and R of screen -->
+
+					<md-button class="md-icon-button" id="close">
+						<md-icon>close</md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+			
+			<!-- MAIN CONTENT, INCLUDING TABS -->
+			<md-content id="tabContainer">
+				<md-tabs class="md-primary md-whiteframe-z1" md-stretch-tabs="always" md-swipe-content md-no-disconnect md-selected="0">
+					<!-- CONVERSATION -->
+					<md-tab label="conversation" md-active="connectListeners()">
+						<md-content layout-padding class="tabbedContent">
+							<md-card class="item" ng-repeat="x in topics">
+								<md-card-content>
+									{{ x }}
+								</md-card-content>
+							</md-card>
+						</md-content>
+					</md-tab>
+					<!-- AGENDA -->
+					<md-tab label="agenda" md-active="connectListeners()">
+						<md-content layout-padding class="tabbedContent">
+							<md-card class="item" ng-repeat="x in agenda">
+								<md-card-content>
+									{{ x }}
+								</md-card-content>
+							</md-card>
+						</md-content>
+					</md-tab>
+				</md-tabs>
+			</md-content>
+		</div>
+		</section>
+		
+		<!-- PLAN VIEW -->
+		<section id="view_plan" md-theme="plan" class="view">
+			<div id="container" layout="column">
+			<!-- MAIN TOOLBAR -->
+			<md-toolbar class="md-primary md-whiteframe-z1">
+				<div class="md-toolbar-tools">
+					<md-button id="menuButton" class="md-icon-button" ng-click="openMenu()">
+						<md-icon>menu</md-icon>
+					</md-button>
+
+					<h2 id="appTitle" class="draggable">Plan</h2>
+					<span class="draggable" style="height: 100%" flex></span> <!--fills up space between L and R of screen -->
+
+					<md-button class="md-icon-button" id="close">
+						<md-icon>close</md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+			</div>
+		</section>
+		
+		<!-- REVIEW VIEW -->
+		<section id="view_review" md-theme="review" class="view">
+			<div id="container" layout="column">
+			<!-- MAIN TOOLBAR -->
+			<md-toolbar class="md-primary md-whiteframe-z1">
+				<div class="md-toolbar-tools">
+					<md-button id="menuButton" class="md-icon-button" ng-click="openMenu()">
+						<md-icon>menu</md-icon>
+					</md-button>
+
+					<h2 id="appTitle" class="draggable">Review</h2>
+					<span class="draggable" style="height: 100%" flex></span> <!--fills up space between L and R of screen -->
+
+					<md-button class="md-icon-button" id="close">
+						<md-icon>close</md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+			</div>
+		</section>
+		
+		<!-- SETTINGS VIEW -->
+		<section id="view_settings" md-theme="settings" class="view">
+			<!-- MAIN TOOLBAR -->
+			<md-toolbar class="md-primary md-whiteframe-z1">
+				<div class="md-toolbar-tools">
+					<md-button id="backButton" class="md-icon-button" ng-click="back()">
+						<md-icon>arrow_back</md-icon>
+					</md-button>
+
+					<h2 id="appTitle" class="draggable">Settings</h2>
+					<span class="draggable" style="height: 100%" flex></span> <!--fills up space between L and R of screen -->
+
+					<md-button class="md-icon-button" id="close">
+						<md-icon>close</md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<!-- CONTENT -->
+			<md-content class="untabbedContent">
+				<md-list>
+					<md-list-item>
+						<md-icon>sync</md-icon>
+						<p>Sync data with Google Account</p>
+						<md-switch ng-model="settings.syncData"></md-switch>
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</section>
+		
+		<!-- HELP AND FEEDBACK VIEW -->
+		<section id="view_help" md-theme="help" class="view">
+			<!-- MAIN TOOLBAR -->
+			<md-toolbar class="md-primary md-whiteframe-z1">
+				<div class="md-toolbar-tools">
+					<md-button id="backButton" class="md-icon-button" ng-click="back()">
+						<md-icon>arrow_back</md-icon>
+					</md-button>
+
+					<h2 id="appTitle" class="draggable">Help and Feedback</h2>
+					<span class="draggable" style="height: 100%" flex></span> <!--fills up space between L and R of screen -->
+
+					<md-button class="md-icon-button" id="close">
+						<md-icon>close</md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+			
+			<!-- CONTENT -->
+			<md-content>
+				<md-list>
+					<md-list-item>HELP</md-list-item>
+				</md-list>
+			</md-content>
+		</section>
+		
+		
+		<!-- JS -->
+        <script type="text/javascript" src="js/model.js"></script>
+        <script type="text/javascript" src="js/controller.js"></script>
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+		<script src="js/angular-material.min.js"></script>
+		<script src="js/angular-animate.min.js"></script>
+		<script src="js/angular-aria.min.js"></script>
+	</body>
 </html>

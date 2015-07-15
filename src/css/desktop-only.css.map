@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAEA,IAAK;EACJ,WAAW,ECHS,iDAAgB",
-"sources": ["../scss/desktop-only.scss","../scss/_fonts.scss"],
+"mappings": "AACA,UAAW;EACV,kBAAkB,EAAE,IAAI;;AAIzB,mBAAmB;EAClB,OAAO,EAAE,IAAI;;AAEd,yBAA0B;EACzB,OAAO,EAAE,GAAG",
+"sources": ["../scss/desktop-only.scss"],
 "names": [],
 "file": "desktop-only.css"
 }

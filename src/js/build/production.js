@@ -289,10 +289,15 @@ e.$validators.pattern=function(a){return e.$isEmpty(a)||w(f)||f.test(a)}}}}},Ic=
 c){return e.$isEmpty(c)||c.length>=f}}}}};O.angular.bootstrap?console.log("WARNING: Tried to load angular more than once."):(be(),de($),A(W).ready(function(){Yd(W,zc)}))})(window,document);!window.angular.$$csp()&&window.angular.element(document).find("head").prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 //
 
-function main() {
-	
+function controller($scope) {
+	console.log("RUNNING");
 }
 
+
+function main() {
+	window.APP = angular.module("conversation-stack", []);
+	APP.controller("controller", controller);
+}
 
 window.$ = function(s) { return document.querySelector(s); };
 document.onreadystatechange = function() { if (document.readyState === "complete") main(); };

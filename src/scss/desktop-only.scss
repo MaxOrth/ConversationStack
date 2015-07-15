@@ -1,5 +1,12 @@
-@import "fonts";
+// FOR DESKTOP DRAGGABLE TITLE
+.draggable {
+	-webkit-app-region: drag;
+}
 
-body {
-	font-family: $font-stack-desktop;
+// DIMMER ICON BUTTONS, BRIGHTEN ON HOVER
+#menuButton md-icon{
+	opacity: 0.95;
+}
+#menuButton md-icon:hover {
+	opacity: 1.0;
 }
