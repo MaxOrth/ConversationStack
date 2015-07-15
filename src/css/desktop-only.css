@@ -1,14 +1,10 @@
-/*md-toolbar {
-	transform: none !important;
-}
+.draggable {
+  -webkit-app-region: drag; }
 
-.mainContent {
-	height: calc(100vh - 128px);
-}*/
 #menuButton md-icon {
-  color: #eee; }
+  opacity: 0.95; }
 
 #menuButton md-icon:hover {
-  color: #fff; }
+  opacity: 1.0; }
 
 /*# sourceMappingURL=desktop-only.css.map */

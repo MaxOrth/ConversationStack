@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,YAAa;EACZ,MAAM,EAAE,kBAAkB",
-"sources": ["../scss/mobile-only.scss"],
+"mappings": "",
+"sources": [],
 "names": [],
 "file": "mobile-only.css"
 }

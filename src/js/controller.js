@@ -11,7 +11,15 @@ var UI = {
 	view: [] // previous view 
 };
 
-function main() {
+function uiSetup() {
+	// STYLING
+	if (MOBILE) {
+		$("#desktopStylesheet").remove();
+	} else {
+		$("#mobileStylesheet").remove();
+	}
+	
+	// EVENT HANDLERS
 	var container = $("#container");
 	
 	// throttle
@@ -25,9 +33,9 @@ function main() {
 }
 
 function scrollListeners() {
-	var content = $(".mainContent");
+	var content = $(".tabbedContent");
 	// don't try to add listener if el doesn't exist (e.g. during early ms of load) OR if not a mobile device OR if lots of these firing
-	if (!content || !MOBILE || (Date.now() - UI.lastTime < 800)) return; 
+	if (!content || !MOBILE || (Date.now() - UI.lastTime < 200)) return; 
 	throttle("scroll", "tScroll", content);
 	content.addEventListener("tScroll", scrollShrink);
 	UI.lastTime = Date.now();
@@ -108,24 +116,27 @@ function menuTouch(e) {
 function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
 	$scope.topics = model.topics;
 	$scope.agenda = model.agenda;
+	$scope.settings = model.settings;
 	
-	$scope.openView = function(name) {
+	$scope.openView = $mdUtil.debounce(function(name) {
 		// take care of any UI changes
 		switch(UI.current) {
 			case "main":
+			case "plan":
+			case "review":
 				$scope.closeMenu();
 				break;
+			case "settings":
+				model.saveSettings();
+				break;
 		}
-		// switch
-		setTimeout(function() {
-			$("#view_"+ UI.current).style.display = "";
-			$("#view_"+ name).style.display = "block";
-			UI.view.push(UI.current);
-			UI.current = name;
-		}, 150);
-	};
+		$("#view_"+ UI.current).style.display = "";
+		$("#view_"+ name).style.display = "block";
+		UI.view.push(UI.current);
+		UI.current = name;
+	}, 50);
 	
-	$scope.back = function() {
+	$scope.back = function() { // not debounced because it calls a debounced function
 		$scope.openView(UI.view.pop());
 	};
 	
@@ -142,9 +153,25 @@ function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
 	
 	$scope.connectListeners = scrollListeners;
 	
+	$scope.styleCurrentView = function(view) {
+		var styleobj = {};
+		if (UI.current === view) {
+			styleobj = $scope.getColor(view);
+		}
+		return styleobj;
+	};
+	$scope.getColor = function(view) {
+		var ret = {"color": Colors[view]};
+		if (view === "review") ret.color = "#ffc107";
+		return ret;
+	};
+	
+	$scope.isMobile = $mdMedia("sm"); // TODO replace with actual check for mobile (maybe from mobile.manifest.json)
+	
 	window.openSideMenu = $scope.openMenu;
 	window.closeSideMenu = $scope.closeMenu;
-	window.MOBILE = $mdMedia("sm");
+	window.MOBILE = $scope.isMobile;
+	window.SCOPE = $scope;
 }
 
 
