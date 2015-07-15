@@ -64,6 +64,7 @@ model = (function() {
 				storage.save("settings", this.settings);
 			}
 			didSyncData = this.settings.syncData;
+			toast("Settings saved.");
 		},
 		saveAllData: saveAllData
 	};

@@ -118,7 +118,7 @@ function menuTouch(e) {
 	}
 }
 
-function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
+function mainController($scope, $mdSidenav, $mdUtil, $mdMedia, $mdToast) {
 	  $scope.topics = model.topics;
 	$scope.agenda = model.agenda;
 	$scope.settings = model.settings;
@@ -173,12 +173,20 @@ function mainController($scope, $mdSidenav, $mdUtil, $mdMedia) {
 		if (view === "review") ret.color = "#ffc107";
 		return ret;
 	};
+
+	$scope.toast = function(text, action) {
+		var toast = $mdToast.simple();
+		toast.content(text);
+		if (action) toast.action(action)
+		$mdToast.show(toast);	
+	};
 	
 	$scope.isMobile = $mdMedia("sm"); // TODO replace with actual check for mobile (maybe from mobile.manifest.json)
 	
 	window.openSideMenu = $scope.openMenu;
 	window.closeSideMenu = $scope.closeMenu;
 	window.openView = $scope.openView;
+	window.toast = $scope.toast;
 	window.MOBILE = $scope.isMobile;
 	window.SCOPE = $scope;
 }
