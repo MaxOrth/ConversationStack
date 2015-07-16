@@ -7,7 +7,8 @@ Colors = {
 	"plan": "green",
 	"review": "amber",
 	"settings": "grey",
-	"help": "indigo"
+	"help": "indigo",
+	"secondary": "blue"
 };
 
 
@@ -21,7 +22,7 @@ window.app = angular.module("conversation-stack", ["ngMaterial"], function($prov
 // themes
 app.config(function($mdThemingProvider) {
 	for (var i in Colors) {
-		$mdThemingProvider.theme(i).primaryPalette(Colors[i]);
+		$mdThemingProvider.theme(i).primaryPalette(Colors[i]).accentPalette(Colors.secondary);
 	}
 });
 // controller
