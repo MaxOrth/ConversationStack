@@ -32,6 +32,7 @@ model = (function() {
 		storage.saveLocal("syncData", this.settings.syncData);
 	};
 	
+        
 	/*
 	 * PUBLIC VARIABLES
 	 */

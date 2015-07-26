@@ -33,6 +33,9 @@ function uiSetup() {
 		els[i].addEventListener("click", closeApp);
 	}
 	scrollListeners();
+        
+        var graph = $("#graphload");
+        graph.addEventListener("click", createGraph);
 }
 
 function scrollListeners() {
@@ -67,6 +70,28 @@ function scrollShrink(e) {
 
 	UI.lastScroll = amt;
 }
+
+function createGraph() {
+    var wHz = [0, 0, 0, 1, 1, 2, 3, 2, 3, 2, 1, 1, 2, 3, 5, 5, 2, 1, 1];
+    this.pitch = [0, 1, 5, 4, 7, 6, 4, 5, 4, 3, 2, 3, 5, 4, 3, 5, 6, 4, 1];
+    
+    console.log("hid");
+    this.chart = new Highcharts.Chart({
+        chart: {
+            type: 'line',
+            renderTo: 'cchart'
+        },
+        series: [{
+            name: 'wHz',
+            data: wHz
+        }, {
+            name: 'pitch',
+            data: this.pitch
+        }]
+    });
+}
+
+createGraph.pitch = [0, 0, 0, 1, 1, 2, 3, 2, 3, 2, 1, 1, 2, 3, 5, 5, 2, 0, 0];
 
 function menuTouch(e) {
 	if (e.touches.length > 1) {

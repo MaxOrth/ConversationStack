@@ -8,7 +8,8 @@ Colors = {
 	"review": "amber",
 	"settings": "grey",
 	"help": "indigo",
-	"secondary": "blue"
+	"secondary": "blue",
+        "graph": "purple",
 };
 
 

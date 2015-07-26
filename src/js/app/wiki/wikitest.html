@@ -9,21 +9,15 @@
         
         <script src="wiki_scrape.js"></script>
         
-        <script type="text/javascript" src="wiki_scrape_test.js"></script>
     </head>
     <body>
+        <p>See console for test output.</p>
         <input id="topic" />
         <button onclick="getWikiPageLinks($('#topic')[0].value, function(e) { console.log(e); } )">Test</button>
         
         <div id="topiclist">
             
         </div>
-        
-        <div id="iframes" hidden>
-            
-        </div>
-        
-        
         
     </body>
 </html>

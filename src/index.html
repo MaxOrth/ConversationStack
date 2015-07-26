@@ -36,6 +36,10 @@
 						<md-icon ng-style="getColor('review')">history</md-icon>
 						<p>Review</p>
 					</md-list-item>
+                                        <md-list-item ng-click="openView('graph')" ng-style="styleCurrentView('review')">
+						<md-icon ng-style="getColor('review')">history</md-icon>
+						<p>Graph</p>
+					</md-list-item>
 
 						<md-divider></md-divider>
 
@@ -207,12 +211,36 @@
 			</md-content>
 		</section>
 		
-		
+		<!-- GRAPH -->
+                <section id="view_graph" md-theme="graph" class="view" >
+			<!-- MAIN TOOLBAR -->
+			<md-toolbar class="md-primary md-whiteframe-z1">
+				<div class="md-toolbar-tools">
+					<md-button id="menuButton" class="md-icon-button" ng-click="openMenu()">
+						<md-icon>menu</md-icon>
+					</md-button>
+
+					<h2 id="appTitle" class="draggable">Graph</h2>
+					<span class="draggable" style="height: 100%" flex></span> <!--fills up space between L and R of screen -->
+
+					<md-button class="md-icon-button" id="close">
+						<md-icon>close</md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+                        <md-content>
+                            <md-button class="md-icon-button" id="graphload"><md-icon>sync</md-icon></md-button>
+                            <div id="cchart">chart goes here</div>
+			</md-content>
+		</section>
+                
 		<!-- JS -->
-        <script type="text/javascript" src="js/model.js"></script>
-        <script type="text/javascript" src="js/controller.js"></script>
-        <script type="text/javascript" src="js/angular.min.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
+                <script type="text/javascript" src="js/jquery/jquery.js"></script>       
+                <script type="text/javascript" src="js/model.js"></script>
+                <script type="text/javascript" src="js/controller.js"></script>
+                <script type="text/javascript" src="js/highcharts/highcharts.js"></script>
+                <script type="text/javascript" src="js/angular.min.js"></script>
+                <script type="text/javascript" src="js/main.js"></script>
 		<script src="js/angular-material.min.js"></script>
 		<script src="js/angular-animate.min.js"></script>
 		<script src="js/angular-aria.min.js"></script>
