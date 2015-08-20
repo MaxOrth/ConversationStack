@@ -229,16 +229,17 @@
 				</div>
 			</md-toolbar>
                         <md-content>
-                            <md-button class="md-icon-button" id="graphload"><md-icon>sync</md-icon></md-button>
-                            <div id="cchart">chart goes here</div>
+                            <md-button class="md-icon-button" id="graphload"><md-icon>sync</md-icon></md-button><md-button id="graphstop"><md-icon>stop</md-icon></md-button>
+                            <div id="freqchart"><canvas width="950px" height="300" id="freqchartcanvas"></canvas></div>
 			</md-content>
 		</section>
                 
 		<!-- JS -->
-                <script type="text/javascript" src="js/jquery/jquery.js"></script>       
+                <script type="text/javascript" src="js/jquery/jquery.min.js"></script>      
+                <script type="text/javascript" src="js/chroma/chroma.js"></script>
                 <script type="text/javascript" src="js/model.js"></script>
                 <script type="text/javascript" src="js/controller.js"></script>
-                <script type="text/javascript" src="js/highcharts/highcharts.js"></script>
+                <script type="text/javascript" src="js/highcharts/highcharts_test.js"></script>
                 <script type="text/javascript" src="js/angular.min.js"></script>
                 <script type="text/javascript" src="js/main.js"></script>
 		<script src="js/angular-material.min.js"></script>

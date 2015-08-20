@@ -36,6 +36,13 @@ function uiSetup() {
         
         var graph = $("#graphload");
         graph.addEventListener("click", createGraph);
+        var graphstop = $("#graphstop");
+        graphstop.addEventListener("click", function() {
+            if ( AUD.ctx.state !== "closed" ) {
+                AUD.ctx.suspend();
+                AUD.ctx.close();
+            }
+        });
 }
 
 function scrollListeners() {
@@ -72,14 +79,14 @@ function scrollShrink(e) {
 }
 
 function createGraph() {
-    var wHz = [0, 0, 0, 1, 1, 2, 3, 2, 3, 2, 1, 1, 2, 3, 5, 5, 2, 1, 1];
-    this.pitch = [0, 1, 5, 4, 7, 6, 4, 5, 4, 3, 2, 3, 5, 4, 3, 5, 6, 4, 1];
+    /*
+    var wHz = [];
+    this.pitch = [];
     
-    console.log("hid");
     this.chart = new Highcharts.Chart({
         chart: {
             type: 'line',
-            renderTo: 'cchart'
+            renderTo: 'freqchart'
         },
         series: [{
             name: 'wHz',
@@ -89,9 +96,55 @@ function createGraph() {
             data: this.pitch
         }]
     });
+    */
+    
+    navigator.webkitGetUserMedia( { audio:true }, function(stream) {
+        var AUD = {};
+        if ( !AUD.ctx )
+            AUD.ctx = new AudioContext();
+        AUD.mediaStream = stream;
+        AUD.fft = AUD.ctx.createAnalyser();
+        AUD.fft.minDecibels = -100;
+        AUD.fft.maxDecibels = -5;
+        AUD.fft.smoothingTimeConstant = .0;
+        AUD.fft.fftSize = 2048;
+        AUD.fftData = new Uint8Array(AUD.fft.frequencyBinCount);
+        //AUD.gain = AUD.ctx.createGain();
+        //AUD.gain.connect(AUD.fft);
+        //AUD.gainarray = [];
+        this.AUD = AUD;
+        AUD.jsNode = AUD.ctx.createScriptProcessor(1024, 1, 1);
+        
+        var visualize = function() {
+            AUD.fft.getByteFrequencyData(AUD.fftData);
+            for ( var i = 0; i < AUD.fftData.length; i++ ) {
+                AUD.cctx.fillStyle = AUD.colorscale(AUD.fftData[i]/256.0);
+                AUD.cctx.fillRect(AUD.index, AUD.height-i, 1, 1);
+            }
+            AUD.index++;
+            if ( AUD.index > AUD.width ) {
+                AUD.index = 0;
+                AUD.cctx.fillStyle = 0x000000;
+                AUD.cctx.fillRect(0,0,AUD.width,AUD.height);
+            }
+        }
+        var elem = $("#freqchartcanvas");
+        AUD.cctx = elem.getContext("2d");
+        AUD.jsNode.onaudioprocess = visualize;
+        AUD.width = elem.width;
+        AUD.height = elem.height;
+        AUD.index = 0;
+        AUD.colorscale = new chroma.scale(['black', 'red', 'yellow', 'white']).out('hex');
+        
+        AUD.src = AUD.ctx.createMediaStreamSource(stream);
+        AUD.src.connect(AUD.fft);
+        AUD.fft.connect(AUD.jsNode);
+        AUD.jsNode.connect(AUD.ctx.destination);
+        
+    }, function(err) {
+        console.log("GetUserMedia failed with error: " + err.name);
+    });
 }
-
-createGraph.pitch = [0, 0, 0, 1, 1, 2, 3, 2, 3, 2, 1, 1, 2, 3, 5, 5, 2, 0, 0];
 
 function menuTouch(e) {
 	if (e.touches.length > 1) {
